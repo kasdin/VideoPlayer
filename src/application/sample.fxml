@@ -18,7 +18,7 @@
    <children>
       <ImageView fitHeight="450.0" fitWidth="914.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="SOMETIMES">
          <image>
-            <Image url="@ressources/images/featured-movie.jpg" />
+            <Image url="@../presentation/ressources/images/featured-movie.jpg" />
          </image>
       </ImageView>
       <Button fx:id="video1" mnemonicParsing="false" prefHeight="36.0" prefWidth="152.0" style="-fx-background-color: #B20000;" text="WATCH TRAILER" textFill="WHITE">
@@ -53,7 +53,7 @@
       </TextField>
       <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@ressources/images/search-2.png" />
+            <Image url="@../presentation/ressources/images/search-2.png" />
          </image>
          <VBox.margin>
             <Insets left="-270.0" top="-36.0" />
@@ -92,12 +92,12 @@
                <children>
                   <ImageView fitHeight="268.0" fitWidth="227.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
                      <image>
-                        <Image url="@ressources/images/once-upon.jpeg" />
+                        <Image url="@../presentation/ressources/images/once-upon.jpeg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="269.0" fitWidth="213.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                      <image>
-                        <Image url="@ressources/images/joker.jpg" />
+                        <Image url="@../presentation/ressources/images/joker.jpg" />
                      </image>
                   </ImageView>
                </children>
