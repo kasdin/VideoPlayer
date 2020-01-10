@@ -13,9 +13,19 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MediaPlayerController implements Initializable {
+
+    public MediaPlayerController(String path) {
+        this.mediaPath = path;
+
+    }
+
+
+    private String mediaPath;
+
     @FXML
     private MediaView mediaV;
 
@@ -34,6 +44,8 @@ public class MediaPlayerController implements Initializable {
     private Media me;
 
 
+
+
     /**
      * This method is invoked automatically in the beginning. Used for initializing, loading data etc.
      *
@@ -43,9 +55,17 @@ public class MediaPlayerController implements Initializable {
     public void initialize(URL location, ResourceBundle resources){
         // Build the path to the location of the media file
         //String path = new File("src/presentation/ressources/videofiles/joker.mp4").getAbsolutePath()";
+        System.out.println(Controller.videoPath.get(0));
 
-        String path1 = new File("src/presentation/ressources/videofiles/irishman.mp4").getAbsolutePath();
+        String path1 = mediaPath;
+        System.out.println(path1);
+        path1 = path1.replaceAll("\\s+","");
+        System.out.println(path1);
         // Create new Media object (the actual media content)
+        String tester = "";
+        tester = tester + Controller.videoPath.get(0);
+
+
         me = new Media(new File(path1).toURI().toString());
         // Create new MediaPlayer and attach the media to be played
         mp = new MediaPlayer(me);
@@ -71,7 +91,6 @@ public class MediaPlayerController implements Initializable {
      */
     private void handlePlay()
     {
-        // Play the mediaPlayer with the attached media
         mp.play();
     }
 
@@ -93,7 +112,7 @@ public class MediaPlayerController implements Initializable {
     @FXML private void handleBack(Stage stage1) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         stage1.setTitle("Video Player");
-        stage1.setScene(new Scene(root, 1000, 1000));
+        stage1.setScene(new Scene(root, 800, 1000));
         mp.stop();
 
     }
