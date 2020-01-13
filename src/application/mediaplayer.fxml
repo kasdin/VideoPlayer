@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,66 +13,124 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.media.MediaView?>
 
-<GridPane alignment="center" hgap="10" prefHeight="1000.0" prefWidth="1000.0" style="-fx-background-color: #292929;" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
+<GridPane alignment="center" hgap="10" style="-fx-background-color: #292929;" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints />
+      <RowConstraints />
    </rowConstraints>
    <children>
-      <MediaView fx:id="mediaV" fitHeight="900.0" fitWidth="900.0" />
-      <AnchorPane maxHeight="-Infinity" prefHeight="63.0" prefWidth="900.0" style="-fx-background-color: lightgrey;" GridPane.valignment="BOTTOM">
+      <MediaView fx:id="mediaV" fitHeight="600.0" fitWidth="900.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Group GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
          <children>
-            <Button fx:id="stop" layoutX="461.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleStop" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../presentation/ressources/icons/stop.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="play" layoutX="403.0" layoutY="12.0" mnemonicParsing="false" onAction="#handlePlay" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../presentation/ressources/icons/play.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="pause" layoutX="354.0" layoutY="17.0" mnemonicParsing="false" onAction="#handlePause" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../presentation/ressources/icons/pause.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="mute" layoutX="818.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleMute" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../presentation/ressources/icons/mute.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="back" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../presentation/ressources/icons/back.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <AnchorPane maxHeight="-Infinity" prefWidth="900.0" style="-fx-background-color: lightgrey;">
+               <children>
+                  <Button fx:id="stop" layoutX="461.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleStop" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../presentation/ressources/icons/stop.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="403.0" layoutY="12.0" mnemonicParsing="false" onAction="#handlePlay" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="imagePlay" fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../presentation/ressources/icons/play.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="mute" layoutX="771.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleMute" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../presentation/ressources/icons/mute.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="back" layoutX="14.0" layoutY="16.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../presentation/ressources/icons/back.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Slider fx:id="sliderSeek" blockIncrement="1.0" layoutX="100.0" layoutY="29.0" max="60.0" min="1.0" prefHeight="16.0" prefWidth="165.0" />
+                  <Label fx:id="labelCurrentTime" layoutX="281.0" layoutY="29.0" text="0" />
+                  <Label fx:id="labelCurrentTime1" layoutX="308.0" layoutY="28.0" prefHeight="17.0" prefWidth="5.0" text="/">
+                     <padding>
+                        <Insets left="-5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="labelTotalDuration" layoutX="325.0" layoutY="28.0" text="0">
+                     <padding>
+                        <Insets left="-5.0" />
+                     </padding>
+                  </Label>
+                  <Slider fx:id="sliderSound" blockIncrement="1.0" layoutX="575.0" layoutY="31.0" max="1.0" prefHeight="16.0" prefWidth="119.0" value="0.01" />
+                  <Label fx:id="labelCurrentSoundVolume" layoutX="715.0" layoutY="29.0" text="0" />
+                  <Label layoutX="742.0" layoutY="28.0" prefHeight="17.0" prefWidth="5.0" text="/">
+                     <padding>
+                        <Insets left="-5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="labelTotalVolume" layoutX="754.0" layoutY="30.0" text="100">
+                     <padding>
+                        <Insets left="-5.0" />
+                     </padding>
+                  </Label>
+                  <Button fx:id="buttonFullscreen" layoutX="840.0" layoutY="17.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="ImageFullscreen" fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../presentation/ressources/icons/fullscreen.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="buttonNext" layoutX="499.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleNext" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../presentation/ressources/icons/forwards.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="buttonPrevious" layoutX="354.0" layoutY="18.0" mnemonicParsing="false" onAction="#handlePrevious" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../presentation/ressources/icons/backward.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
-      </AnchorPane>
+      </Group>
+      <GridPane fx:id="mediaPlaylistGrid" prefHeight="224.0" prefWidth="900.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <GridPane.margin>
+            <Insets top="40.0" />
+         </GridPane.margin>
+      </GridPane>
    </children>
 </GridPane>
