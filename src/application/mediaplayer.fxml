@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.media.MediaView?>
 
-<GridPane alignment="center" hgap="10" style="-fx-background-color: #292929;" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane alignment="center" hgap="10.0" style="-fx-background-color: #292929;" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -95,24 +95,6 @@
                         <ImageView fx:id="ImageFullscreen" fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../presentation/ressources/icons/fullscreen.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="buttonNext" layoutX="499.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleNext" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../presentation/ressources/icons/forwards.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="buttonPrevious" layoutX="354.0" layoutY="18.0" mnemonicParsing="false" onAction="#handlePrevious" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../presentation/ressources/icons/backward.png" />
                            </image>
                         </ImageView>
                      </graphic>

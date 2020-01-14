@@ -139,7 +139,7 @@
                               <Insets top="25.0" />
                            </GridPane.margin>
                         </ImageView>
-                        <Button id="1" fx:id="buttonVideo1" mnemonicParsing="false" onAction="#addVideo1ToPlaylist" prefHeight="36.0" prefWidth="201.0" style="-fx-background-color: #B20000;" text="Add To Playlist" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                        <Button id="1" fx:id="buttonVideo1" mnemonicParsing="false" prefHeight="36.0" prefWidth="201.0" style="-fx-background-color: #B20000;" text="Add To Playlist" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -147,7 +147,7 @@
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="buttonVideo2" mnemonicParsing="false" onAction="#addVideo2ToPlaylist" prefHeight="36.0" prefWidth="190.0" style="-fx-background-color: #B20000;" text="Add To Playlist" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                        <Button fx:id="buttonVideo2" mnemonicParsing="false" prefHeight="36.0" prefWidth="190.0" style="-fx-background-color: #B20000;" text="Add To Playlist" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -155,12 +155,12 @@
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <Button id="3" fx:id="buttonVideo3" mnemonicParsing="false" onAction="#addVideo3ToPlaylist" prefHeight="36.0" prefWidth="201.0" style="-fx-background-color: #B20000;" text="Add To Playlist" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                        <Button id="3" fx:id="buttonVideo3" mnemonicParsing="false" prefHeight="36.0" prefWidth="201.0" style="-fx-background-color: #B20000;" text="Add To Playlist" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonVideo4" mnemonicParsing="false" onAction="#addVideo4ToPlaylist" prefHeight="36.0" prefWidth="201.0" style="-fx-background-color: #B20000;" text="Add To Playlist" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                        <Button fx:id="buttonVideo4" mnemonicParsing="false" prefHeight="36.0" prefWidth="201.0" style="-fx-background-color: #B20000;" text="Add To Playlist" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
