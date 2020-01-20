@@ -1,8 +1,6 @@
 package application;
 
 import javafx.beans.InvalidationListener;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.scene.Parent;
@@ -31,6 +29,7 @@ public class MediaPlayerController implements Initializable {
     public MediaPlayerController(String path) {
         this.mediaPath = path;
     }
+
 
     @FXML private GridPane mediaPlaylistGrid;
 
@@ -62,44 +61,12 @@ public class MediaPlayerController implements Initializable {
 
     @FXML private Button back;
 
-
     private String mediaPath;
+    private MediaPlayer mediaPlayer;
+    private Media media;
 
-    private MediaPlayer mp;
-    private Media me;
+    private ArrayList<String> imagePath = new ArrayList<>();
 
-
-    @FXML public void handleShowPlaylistGrid() {
-        mediaPlaylistGrid.setVisible(true);
-    }
-
-    @FXML public void handleDisablePlaylistGrid() {
-        mediaPlaylistGrid.setVisible(false);
-    }
-
-
-    private InvalidationListener sliderChangeListener = o-> {
-        Duration seekTo = Duration.seconds((int)sliderSeek.getValue());
-        mp.seek(seekTo);
-    };
-
-    private InvalidationListener currentTimeChangeListener = o-> {
-        if((int)mp.getCurrentTime().toSeconds() == (int)mp.getTotalDuration().toSeconds()) {
-            handleStop();
-        }
-        sliderSeek.setMax(mp.getTotalDuration().toSeconds());
-        labelCurrentTime.setText(String.valueOf((int)mp.getCurrentTime().toSeconds()));
-        sliderSeek.valueProperty().removeListener(sliderChangeListener);
-        sliderSeek.setValue((int)mp.getCurrentTime().toSeconds());
-        sliderSeek.valueProperty().addListener(sliderChangeListener);
-    };
-
-    private InvalidationListener sliderSoundListener = o-> {
-        mp.setVolume(sliderSound.getValue());
-        labelCurrentSoundVolume.setText(String.valueOf((int)(sliderSound.getValue()*100)));
-    };
-
-    ArrayList<String> imagePath = new ArrayList<>();
 
     /**
      * This method is invoked automatically in the beginning. Used for initializing, loading data etc.
@@ -108,7 +75,15 @@ public class MediaPlayerController implements Initializable {
      * @param resources
      */
     public void initialize(URL location, ResourceBundle resources){
+        createPlaylistThumbnails();
+        createMediaPlayer();
+        setActionListeners();
+    }
 
+    /**
+     * This method creates the video thumbnails for the playlist.
+     */
+    private void createPlaylistThumbnails() {
         imagePath = Controller.fillPlaylistArray("fldThumbnailPath");
 
         for (int i = 0; i <imagePath.size() ; i++) {
@@ -118,17 +93,18 @@ public class MediaPlayerController implements Initializable {
             ImageView thumbnail = controller.createThumbnail(path,videoP);
             mediaPlaylistGrid.addColumn(i+1, thumbnail);
             GridPane.setHalignment(thumbnail, HPos.CENTER);
-            mediaPlaylistGrid.setHgap(40);
+            mediaPlaylistGrid.setHgap(30);
             thumbnail.setOnMouseClicked(event -> handleThumbnailPlay(videoP));
         }
 
+    }
+
+    /**
+     * This method sets all action listeners.
+     */
+    private void setActionListeners() {
         buttonFullscreen.setOnMouseClicked(event -> handleFullscreenMax() );
 
-        String path1 = mediaPath;
-        path1 = path1.replaceAll("\\s+","");
-        me = new Media(new File(path1).toURI().toString());
-        mp = new MediaPlayer(me);
-        mediaV.setMediaPlayer(mp);
         back.setOnAction(event -> {
             try {
                 handleBack((Stage)back.getScene().getWindow());
@@ -137,104 +113,172 @@ public class MediaPlayerController implements Initializable {
             }
         });
 
-
-        sliderSeek.setMin(1);
-
-        sliderSeek.setBlockIncrement(1.0);
         sliderSeek.valueProperty().addListener(sliderChangeListener);
-
-        mp.currentTimeProperty().addListener(currentTimeChangeListener);
-
+        mediaPlayer.currentTimeProperty().addListener(currentTimeChangeListener);
         sliderSound.valueProperty().addListener(sliderSoundListener);
-
+        sliderSeek.setMin(1);
+        sliderSeek.setBlockIncrement(1.0);
     }
 
-    @FXML private void handlePlay()
-    {
-        mp.play();
-        labelTotalDuration.setText(String.valueOf((int)mp.getTotalDuration().toSeconds()));
+    /**
+     * this method creates the MediaPlayer.
+     */
+    private void createMediaPlayer() {
+        String path = mediaPath;
+        path = path.replaceAll("\\s+","");
+        media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaV.setMediaPlayer(mediaPlayer);
+    }
+
+    /**
+     * This method shows the playlist.
+     */
+    private void handleShowPlaylistGrid() {
+        mediaPlaylistGrid.setVisible(true);
+    }
+
+
+    /**
+     * This method disables the playlist.
+     */
+    private void handleDisablePlaylistGrid() {
+        mediaPlaylistGrid.setVisible(false);
+    }
+
+    /**
+     * This method listens for changes to the slider who controls the seek functions.
+     */
+    private InvalidationListener sliderChangeListener = o-> {
+        Duration seekTo = Duration.seconds((int)sliderSeek.getValue());
+        mediaPlayer.seek(seekTo);
+    };
+
+    /**
+     * This method controls the sliders and updates our labels.
+     */
+    private InvalidationListener currentTimeChangeListener = o-> {
+        if((int) mediaPlayer.getCurrentTime().toSeconds() == (int) mediaPlayer.getTotalDuration().toSeconds()) {
+            handleStop();
+        }
+        sliderSeek.setMax(mediaPlayer.getTotalDuration().toSeconds());
+        labelCurrentTime.setText(String.valueOf((int) mediaPlayer.getCurrentTime().toSeconds()));
+        sliderSeek.valueProperty().removeListener(sliderChangeListener);
+        sliderSeek.setValue((int) mediaPlayer.getCurrentTime().toSeconds());
+        sliderSeek.valueProperty().addListener(sliderChangeListener);
+    };
+
+    /**
+     * This method listen for changes to the sound slider and updates the values.
+     */
+    private InvalidationListener sliderSoundListener = o-> {
+        mediaPlayer.setVolume(sliderSound.getValue());
+        labelCurrentSoundVolume.setText(String.valueOf((int)(sliderSound.getValue()*100)));
+    };
+
+    /**
+     * This method controls the play function.
+     */
+    @FXML private void handlePlay() {
+        mediaPlayer.play();
+        labelTotalDuration.setText(String.valueOf((int) mediaPlayer.getTotalDuration().toSeconds()));
         sliderSound.setValue(1.0);
         imagePlay.setImage(new Image("presentation/ressources/icons/pause.png"));
         play.setOnAction(event -> handlePause());
     }
 
-    @FXML private void handleStop()
-    {
-        mp.stop();
+    /**
+     * This method stops a video.
+     */
+    @FXML private void handleStop() {
+        mediaPlayer.stop();
         sliderSeek.setValue(0);
         imagePlay.setImage(new Image("presentation/ressources/icons/play.png"));
         play.setOnAction(event -> handlePlay());
     }
 
-    @FXML private void handlePause()
-    {
-        mp.pause();
+    /**
+     * This method pauses a video.
+     */
+    @FXML private void handlePause() {
+        mediaPlayer.pause();
         imagePlay.setImage(new Image("presentation/ressources/icons/play.png"));
         play.setOnAction(event -> handlePlay());
     }
 
-    @FXML private void handleMute()
-    {
-        mp.setMute(true);
+    /**
+     * This is used to mute the video.
+     */
+    @FXML private void handleMute() {
+        mediaPlayer.setMute(true);
         mute.setOnAction(event -> handleUnmute());
         sliderSound.setValue(0);
     }
 
-
-    @FXML private void handleUnmute()
-    {
-        mp.setMute(false);
+    /**
+     * This method is used for unmuting a video.
+     */
+    @FXML private void handleUnmute() {
+        mediaPlayer.setMute(false);
         sliderSound.setValue(100);
         mute.setOnAction(event -> handleMute());
     }
 
+    /**
+     * This method handles your playlist.
+     * @param videoPath
+     */
     @FXML private void handleThumbnailPlay(String videoPath) {
-
-        mp.stop();
+        mediaPlayer.stop();
         imagePlay.setImage(new Image("presentation/ressources/icons/play.png"));
 
         String path1 = videoPath;
         path1 = path1.replaceAll("\\s+","");
-        me = new Media(new File(path1).toURI().toString());
-        mp = new MediaPlayer(me);
-        mediaV.setMediaPlayer(mp);
-        mp.currentTimeProperty().addListener(currentTimeChangeListener);
+        media = new Media(new File(path1).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaV.setMediaPlayer(mediaPlayer);
+        mediaPlayer.currentTimeProperty().addListener(currentTimeChangeListener);
 
     }
 
+    /**
+     * This method is invoked when the back buttion is pressed.
+     * @param stage1
+     * @throws IOException
+     */
     @FXML private void handleBack(Stage stage1) throws IOException {
+        mediaPlayer.stop();
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         stage1.setTitle("Video Player");
-        stage1.setScene(new Scene(root, 800, 1000));
-        mp.stop();
-
+        stage1.setScene(new Scene(root, 1440, 900));
+        stage1.setFullScreen(true);
     }
 
+    /**
+     * This is used for controlling the time slider.
+     */
     @FXML private void handleSliderSeek() {
-        mp.seek(Duration.seconds((int)sliderSeek.getValue()));
+        mediaPlayer.seek(Duration.seconds((int)sliderSeek.getValue()));
     }
 
-
+    /**
+     * This method changes the size of the mediaview
+     */
     @FXML private void handleFullscreenMax() {
         mediaPlaylistGrid.setVisible(false);
-
-        DoubleProperty bindWidth = mediaV.fitWidthProperty();
-        DoubleProperty bindHeight = mediaV.fitHeightProperty();
-        bindWidth.bind(Bindings.selectDouble(mediaV.sceneProperty(), "width"));
-        bindHeight.bind(Bindings.selectDouble(mediaV.sceneProperty(), "height"));
+        mediaV.fitHeightProperty().setValue(1700);
+        mediaV.fitWidthProperty().setValue(1700);
         buttonFullscreen.setOnMouseClicked(event -> handleFullscreenMin());
-        System.out.println(mediaV.getScene().getHeight());
-        System.out.println(bindHeight.getValue());;
     }
 
+    /**
+     * This method sets the MediaView size to small again.
+     */
     @FXML private void handleFullscreenMin() {
-        mediaV.fitWidthProperty().unbind();
-        mediaV.fitHeightProperty().unbind();
         mediaV.fitHeightProperty().setValue(900);
         mediaV.fitWidthProperty().setValue(900);
         buttonFullscreen.setOnMouseClicked(event -> handleFullscreenMax() );
         mediaPlaylistGrid.setVisible(true);
-
     }
 
 }

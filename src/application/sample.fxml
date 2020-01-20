@@ -16,16 +16,16 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="parentScrollPane" hbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<ScrollPane fx:id="parentScrollPane" hbarPolicy="NEVER" style="-fx-background-color: #292929;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <content>
-      <VBox alignment="TOP_CENTER">
+      <VBox fx:id="vBox" alignment="CENTER" style="-fx-background-color: #666666;">
          <children>
-            <ImageView fitHeight="450.0" fitWidth="914.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="SOMETIMES">
+            <ImageView fx:id="bannerSlider" fitHeight="450.0" fitWidth="914.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="SOMETIMES">
                <image>
                   <Image url="@../presentation/ressources/images/featured-movie.jpg" />
                </image>
             </ImageView>
-            <Button fx:id="video1" mnemonicParsing="false" prefHeight="36.0" prefWidth="152.0" style="-fx-background-color: #B20000;" text="WATCH TRAILER" textFill="WHITE">
+            <Button fx:id="video1" mnemonicParsing="false" prefHeight="36.0" prefWidth="152.0" style="-fx-background-color: #B20000;" text="FEATURED VIDEO" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -44,7 +44,7 @@
                   <Insets left="-500.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="searchField" alignment="BOTTOM_LEFT" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="45.0" prefWidth="313.0" promptText="Search for title or genre">
+            <TextField fx:id="searchField" alignment="BOTTOM_LEFT" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="45.0" prefWidth="313.0" promptText="Search for title">
                <font>
                   <Font size="16.0" />
                </font>
@@ -65,12 +65,12 @@
             </ImageView>
             <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="381.0">
                <children>
-                  <Button fx:id="buttonPlaylist" layoutX="68.0" layoutY="21.0" mnemonicParsing="false" onMouseClicked="#showYourPlaylist" style="-fx-background-color: transparent;" text="Your Playlist">
+                  <Button fx:id="buttonPlaylist" layoutX="68.0" layoutY="21.0" mnemonicParsing="false" onMouseClicked="#showYourPlaylist" style="-fx-background-color: transparent;" text="Your Playlist" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="buttonVideos" layoutX="234.0" layoutY="21.0" mnemonicParsing="false" onMouseClicked="#showAllVideos" style="-fx-background-color: transparent;" text="All Videos" underline="true">
+                  <Button fx:id="buttonVideos" layoutX="234.0" layoutY="21.0" mnemonicParsing="false" onMouseClicked="#showAllVideos" style="-fx-background-color: transparent;" text="All Videos" textFill="WHITE" underline="true">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -82,14 +82,16 @@
             </AnchorPane>
             <AnchorPane maxWidth="-Infinity" prefHeight="736.0" prefWidth="539.0">
                <children>
-                  <GridPane fx:id="searchGrid" layoutX="10.0" layoutY="8.0" prefHeight="1002.0" prefWidth="667.0" visible="false">
+                  <GridPane fx:id="searchGrid" layoutX="10.0" layoutY="3.0" prefWidth="667.0" visible="false">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.0" minWidth="10.0" prefWidth="313.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="356.0" minWidth="10.0" prefWidth="354.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints maxHeight="290.0" minHeight="10.0" prefHeight="285.0" vgrow="SOMETIMES" />
                      </rowConstraints>
+                     <padding>
+                        <Insets left="165.0" />
+                     </padding>
                   </GridPane>
                   <GridPane fx:id="playlistGrid" layoutY="-2.0" prefHeight="1300.0" prefWidth="667.0" visible="false">
                     <columnConstraints>
@@ -101,7 +103,7 @@
                     </rowConstraints>
                   </GridPane>
                   <TextArea fx:id="playlistField" prefHeight="200.0" prefWidth="598.0" visible="false" />
-                  <GridPane fx:id="thumbnailHolder" alignment="CENTER" gridLinesVisible="true" layoutX="57.0" layoutY="24.0" prefHeight="688.0" prefWidth="485.0">
+                  <GridPane fx:id="thumbnailHolder" alignment="CENTER" layoutX="101.0" layoutY="22.0" prefHeight="688.0" prefWidth="485.0" style="-fx-background-color: #E5E5E5;">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="247.0" minWidth="10.0" prefWidth="244.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="241.0" />
@@ -113,17 +115,12 @@
                         <RowConstraints maxHeight="280.0" minHeight="44.0" prefHeight="55.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ImageView fitHeight="276.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
-                           <image>
-                              <Image url="@../presentation/ressources/images/once-upon.jpeg" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="269.0" fitWidth="213.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                        <ImageView fx:id="thumbnail2" fitHeight="269.0" fitWidth="213.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                            <image>
                               <Image url="@../presentation/ressources/images/joker.jpg" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="268.0" fitWidth="227.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <ImageView fx:id="thumbnail3" fitHeight="268.0" fitWidth="227.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                            <image>
                               <Image url="@../presentation/ressources/images/wolf.jpg" />
                            </image>
@@ -131,9 +128,9 @@
                               <Insets top="25.0" />
                            </GridPane.margin>
                         </ImageView>
-                        <ImageView fitHeight="268.0" fitWidth="227.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <ImageView fx:id="thumbnail4" fitHeight="268.0" fitWidth="227.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                            <image>
-                              <Image url="@../presentation/ressources/images/shutter.jpg" />
+                              <Image url="@../presentation/ressources/images/irishman.jpg" />
                            </image>
                            <GridPane.margin>
                               <Insets top="25.0" />
@@ -165,6 +162,11 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Button>
+                        <ImageView fx:id="thumbnail1" fitHeight="269.0" fitWidth="213.0" layoutX="279.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+                           <image>
+                              <Image url="@../presentation/ressources/images/once-upon.jpeg" />
+                           </image>
+                        </ImageView>
                      </children>
                   </GridPane>
                </children>

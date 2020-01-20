@@ -8,17 +8,13 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    Stage window;
-    Scene scene1, scene2;
-
-
-
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
         Parent root = FXMLLoader.load(getClass().getResource("../application/sample.fxml"));
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 800, 800));
+        primaryStage.setScene(new Scene(root, 1440, 900));
         primaryStage.setFullScreen(true);
         primaryStage.show();
     }

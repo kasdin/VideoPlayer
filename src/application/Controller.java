@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -33,6 +34,14 @@ public class Controller implements Initializable {
 
     @FXML private Button buttonVideo4;
 
+    @FXML private ImageView thumbnail1;
+
+    @FXML private ImageView thumbnail2;
+
+    @FXML private ImageView thumbnail3;
+
+    @FXML private ImageView thumbnail4;
+
     @FXML private Button buttonPlaylist;
 
     @FXML private Button buttonVideos;
@@ -47,29 +56,84 @@ public class Controller implements Initializable {
 
     @FXML private GridPane searchGrid;
 
-    public static ArrayList<String> videoPath = new ArrayList<>();
+    public static ArrayList<String> videoPath = new ArrayList<>(); //This Arraylist is used to hold the videopath
 
+    /**
+     * This method runs when the application is started.
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setButtonActionListeners();
+        setThumbnailActionListeners();
         checkIfVideosAreAlreadyAddedToPlaylist();
         setSearchFieldOnKeyPressed();
+        parentScrollPane.setFitToWidth(true);
+        videoPath = fillPlaylistArray("fldMediaPath");
     }
+
+    /**
+     * This method set action listeners on the thumbnails(ImageViews) shown when you click the button "All Videos".
+     */
+    private void setThumbnailActionListeners() {
+
+        thumbnail1.setOnMouseClicked(event -> {
+            try {
+                startVideo("src/presentation/ressources/videofiles/onceUpon.mp4 ");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        thumbnail2.setOnMouseClicked(event -> {
+            try {
+                startVideo( "src/presentation/ressources/videofiles/joker.mp4 ");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thumbnail3.setOnMouseClicked(event -> {
+            try {
+                startVideo("src/presentation/ressources/videofiles/thewolf.mp4 ");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thumbnail4.setOnMouseClicked(event -> {
+            try {
+                startVideo("src/presentation/ressources/videofiles/irishman.mp4 ");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * This method set button actions listeners for the buttons "Add Video to Playlist".
+     */
 
     private void setButtonActionListeners() {
         buttonVideo1.setOnAction(event -> addVideoToPlaylist(buttonVideo1, 3));
         buttonVideo2.setOnAction(event -> addVideoToPlaylist(buttonVideo2, 2));
         buttonVideo3.setOnAction(event -> addVideoToPlaylist(buttonVideo3, 5));
-        buttonVideo4.setOnAction(event -> addVideoToPlaylist(buttonVideo4, 4));
+        buttonVideo4.setOnAction(event -> addVideoToPlaylist(buttonVideo4, 1));
     }
+
+    /**
+     * This method checks if a video is already added to your playlist.
+     */
 
     private void checkIfVideosAreAlreadyAddedToPlaylist() {
         checkAddedVideosPlaylist(buttonVideo1, 3);
         checkAddedVideosPlaylist(buttonVideo2, 2);
         checkAddedVideosPlaylist(buttonVideo3, 5);
-        checkAddedVideosPlaylist(buttonVideo4, 4);
+        checkAddedVideosPlaylist(buttonVideo4, 1);
     }
 
+    /**
+     * This method sets action listener for the searchField and run searchVideo() if the key ENTER is pressed.
+     */
     private void setSearchFieldOnKeyPressed() {
         searchField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -78,6 +142,10 @@ public class Controller implements Initializable {
         });
     }
 
+    /**
+     * This method shows "Your Playlist". It creates thumbnails and set action listeners, it fetches data
+     * from the database.
+     */
     @FXML private void showYourPlaylist() {
         videoPath.clear();
         playlistGrid.getChildren().clear();
@@ -120,6 +188,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * This method shows all available videos when the button "All videos" are pressed.
+     */
+
     @FXML private void showAllVideos() {
         thumbnailHolder.setVisible(true);
         buttonPlaylist.setUnderline(false);
@@ -129,15 +201,28 @@ public class Controller implements Initializable {
         buttonVideos.setUnderline(true);
     }
 
-    private void startVideo(Stage stage1, String path) throws Exception {
+
+    /**
+     * This method creates a new stage
+     * @param path
+     * @throws Exception
+     */
+    private void startVideo(String path) throws Exception {
+        Stage stage = (Stage) parentScrollPane.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("mediaplayer.fxml"));
         MediaPlayerController mediaPlay = new MediaPlayerController(path);
         loader.setController(mediaPlay);
         Parent root = loader.load();
-        stage1.setScene(new Scene(root, 1000,1300));
+        stage.setScene(new Scene(root, 1440,1000));
+        stage.setFullScreen(true);
 
     }
 
+    /**
+     * This method check the database if a video is already added to "Your Playlist" and changes the buttons.
+     * @param button
+     * @param videoID
+     */
     @FXML private void checkAddedVideosPlaylist(Button button, int videoID) {
         DB.selectSQL(("SELECT fldVideoID FROM tblVideoPlaylist WHERE fldVideoID = " + videoID + ""));
         if (!DB.getData().equals("|ND|")) {
@@ -148,6 +233,11 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * this method add a video to "Your Playlist" and insert it into the database.
+     * @param button
+     * @param videoID
+     */
     @FXML private void addVideoToPlaylist(Button button, int videoID) {
         DB.insertSQL("INSERT INTO tblVideoPlaylist (fldVideoID, fldPlaylistID) VALUES('"+videoID +"','1')");
         button.setText("Remove From Playlist");
@@ -155,6 +245,11 @@ public class Controller implements Initializable {
         button.setOnAction(event -> deleteVideoFromPlaylist(button, videoID));
     }
 
+    /**
+     * This method deletes a video from "Your Playlist" and deletes it from the database.
+     * @param button
+     * @param videoID
+     */
     @FXML private void deleteVideoFromPlaylist(Button button, int videoID) {
         DB.deleteSQL("DELETE FROM tblVideoPlaylist Where fldVideoID = "+ videoID + "");
         button.setText("Add To Playlist");
@@ -162,6 +257,10 @@ public class Controller implements Initializable {
         button.setOnAction(event -> addVideoToPlaylist(button, videoID));
 
     }
+
+    /**
+     * This method is the search function of the application.
+     */
 
     @FXML private void searchVideos() {
         videoPath.clear();
@@ -186,7 +285,16 @@ public class Controller implements Initializable {
 
     }
 
+    /**
+     * This method creates a thumbnail(Imageview), sets the properties and adds a action listener.
+     * @param imagePath
+     * @param videoPath
+     * @return
+     */
+
     public ImageView createThumbnail(String imagePath, String videoPath) {
+        System.out.println(imagePath);
+        System.out.println(videoPath);
         ImageView thumbnail = new ImageView();
         thumbnail.setFitWidth(201);
         thumbnail.setFitHeight(280);
@@ -194,7 +302,7 @@ public class Controller implements Initializable {
         thumbnail.setImage(new Image(imagePath));
         thumbnail.setOnMouseClicked(event -> {
             try {
-                startVideo((Stage)parentScrollPane.getScene().getWindow(), videoPath);
+                startVideo(videoPath);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -203,6 +311,12 @@ public class Controller implements Initializable {
         return thumbnail;
     }
 
+    /**
+     * This method is used to fill an array with String data fetched from the database.
+     * @param sqlQuery
+     * @param userSearchQuery
+     * @return
+     */
     private ArrayList<String> fillSearchArray(String sqlQuery, String userSearchQuery) {
         ArrayList<String> arrayList = new ArrayList<>();
         DB.selectSQL("SELECT " + sqlQuery + " FROM tblVideo WHERE MATCH(fldVideoName) AGAINST('" + userSearchQuery + "');");
@@ -218,6 +332,12 @@ public class Controller implements Initializable {
 
         return arrayList;
     }
+
+    /**
+     * This method returns an array with playlist data from the database.
+     * @param sqlQuery
+     * @return
+     */
 
     public static ArrayList<String> fillPlaylistArray(String sqlQuery) {
         ArrayList<String> arrayList = new ArrayList<>();
